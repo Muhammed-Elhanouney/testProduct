@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css
+
+
+
+    ">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <section>
+            <div class="">
+                <nav class="navbar navbar-expand-lg bg-body-secondary">
+                    <div class="container">
+                        <button class="navbar-brand border-0" @click="isActive = false">Products</button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <button  @click="isActive = true" class="nav-link " aria-current="page" ><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="22" height="16"
+                                            fill="currentColor" class=" bi bi-cart4" viewBox="0 0 16 16">
+                                            <path
+                                                d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+                                        </svg></button>
+                                </li>
+                            </ul>
+                            <!-- <form class="d-flex" role="search">
+                          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form> -->
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+        <!-- nav -->
+
+        <section v-if="!isActive">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-4 col-md-6 col-12 mt-5 mb-5 d-flex justify-content-center"
+                        v-for="product in products">
+                        <div class="card" style="width: 18rem;">
+                            <img src="images/avatar2.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{product.title}}</h5>
+                                <p class="card-text">{{product.description}}</p>
+                                <p class="card-text">Price : <strong> {{product.price}}$ </strong></p>
+                               <div class="d-flex justify-content-between">
+                                <button @click="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+                                <button class="btn btn-secondary"> {{product.stock}} </button>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section-products -->
+
+
+        <section v-else class="mt-5">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-hover table-bordered table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>title</th>
+                                <th>price</th>
+                                <th>quantity</th>
+                                <th>controls</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         
+                            <tr v-if="carts.length > 0" v-for="(cart , index) in carts">
+                                <td>{{cart.product.id}}</td>
+                                <td>{{cart.product.title}}</td>
+                                <td>{{ cart.quantity * cart.product.price}}</td>
+                                <td> <button class="btn btn-danger" @click="deleMi(cart)"
+                                    :disabled="cart.quantity == 0">-</button> {{cart.quantity}} <button
+                                    class="btn btn-success" @click="addPlus(cart)" :disabled="cart.product.stock == 0">+</button></td>
+                                <td><button @click="deletCart(cart , index)" class="btn btn-danger"> delete </button></td>
+                            </tr>
+                            <tr v-else>
+                                <td colspan="5">No Products Found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+        </section>
+        <!-- cart -->
+    </div>
+
+
+    <script src="js/vue.js"></script>
+    <script src="js/object.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
